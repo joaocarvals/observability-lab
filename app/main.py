@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from datetime import datetime
 from app.logger import logger
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 app = FastAPI(
@@ -9,6 +10,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 def home():
