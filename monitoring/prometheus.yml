@@ -1,5 +1,6 @@
 #Config gloval do Prometheus
 global:
+#Intervalo de coleta de métricas
   scrape_interval: 5s
 
 scrape_configs:
