@@ -1,11 +1,16 @@
-#Config gloval do Prometheus
+# Configuração global do Prometheus
 global:
-#Intervalo de coleta de métricas
+  # Intervalo de coleta de métricas (a cada quanto tempo o Prometheus faz o scrape dos targets)
   scrape_interval: 5s
 
+# Lista de configurações de coleta (jobs de scrape)
 scrape_configs:
+  # Nome do job — identifica esse grupo de targets nas métricas coletadas
   - job_name: "observability-api"
 
+    # Configuração estática de targets (endereços fixos, sem service discovery)
     static_configs:
+      # Lista de endereços (host:porta) que serão monitorados por este job
       - targets:
+          # host.docker.internal permite que o container acesse serviços rodando na máquina host
           - host.docker.internal:8000
