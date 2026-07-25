@@ -1,3 +1,4 @@
+#Config gloval do Prometheus
 global:
   scrape_interval: 5s
 
