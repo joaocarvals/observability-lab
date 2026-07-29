@@ -1,14 +1,26 @@
 services:
 
+  # Serviço do Prometheus responsável por coletar e armazenar métricas
   prometheus:
+
+    # Imagem oficial do Prometheus disponível no Docker Hub
     image: prom/prometheus:latest
 
+    # Nome fixo do container para facilitar sua identificação
     container_name: prometheus
 
+    # Mapeia a porta 9090 do host para a porta 9090 do container
+    # A interface do Prometheus ficará disponível em:
+    # http://localhost:9090
     ports:
       - "9090:9090"
 
+    # Monta o arquivo de configuração local do Prometheus
+    # dentro do container, permitindo personalizar os alvos
+    # que serão monitorados (scrape targets)
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
 
+    # Reinicia automaticamente o container caso ele pare,
+    # exceto quando for interrompido manualmente
     restart: unless-stopped
