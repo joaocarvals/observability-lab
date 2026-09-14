@@ -47,3 +47,40 @@ services:
     # Garante que a API suba antes do Prometheus tentar coletar dela
     depends_on:
       - api
+
+  # Serviço do Grafana responsável pela visualização das métricas
+  grafana:
+
+    # Imagem oficial do Grafana disponível no Docker Hub
+    image: grafana/grafana:latest
+
+    # Nome fixo do container para facilitar sua identificação
+    container_name: grafana
+
+    # Mapeia a porta 3000 do host para a porta 3000 do container
+    # A interface do Grafana ficará disponível em:
+    # http://localhost:3000
+    ports:
+      - "3000:3000"
+
+    # Usuário e senha padrão de acesso (troque em produção)
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+    # Provisiona automaticamente o datasource do Prometheus
+    # e persiste os dados/dashboards do Grafana entre reinícios
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+
+    # Reinicia automaticamente o container caso ele pare,
+    # exceto quando for interrompido manualmente
+    restart: unless-stopped
+
+    # Garante que o Prometheus suba antes do Grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  grafana-data:

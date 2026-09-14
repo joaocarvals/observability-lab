@@ -33,14 +33,17 @@ tests/          # (reservado para testes futuros)
 docker compose up -d --build
 ```
 
-Isso sobe dois containers na mesma rede:
+Isso sobe três containers na mesma rede:
 
 | Serviço      | URL                          | Descrição                          |
 |--------------|-------------------------------|--------------------------------------|
 | `api`        | http://localhost:8000         | API FastAPI                          |
 | `prometheus` | http://localhost:9090         | Coleta e armazenamento de métricas   |
+| `grafana`    | http://localhost:3000         | Visualização das métricas            |
 
 O Prometheus já vem configurado (`monitoring/prometheus.yml`) para coletar métricas da API em `api:8000` (nome do serviço na rede do compose) a cada 5 segundos.
+
+O Grafana já sobe com o datasource do Prometheus provisionado automaticamente (`monitoring/grafana/provisioning/datasources`). Login padrão: `admin` / `admin` (defina credenciais próprias antes de expor isso fora do seu ambiente local).
 
 Endpoints da API:
 
