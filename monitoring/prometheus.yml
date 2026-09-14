@@ -12,5 +12,5 @@ scrape_configs:
     static_configs:
       # Lista de endereços (host:porta) que serão monitorados por este job
       - targets:
-          # host.docker.internal permite que o container acesse serviços rodando na máquina host
-          - host.docker.internal:8000
+          # "api" é o nome do serviço da API na rede interna do docker-compose
+          - api:8000

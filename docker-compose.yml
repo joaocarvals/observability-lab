@@ -1,5 +1,24 @@
 services:
 
+  # Serviço da API FastAPI instrumentada com métricas Prometheus
+  api:
+
+    # Constrói a imagem a partir do Dockerfile na raiz do projeto
+    build: .
+
+    # Nome fixo do container para facilitar sua identificação
+    container_name: observability-api
+
+    # Mapeia a porta 8000 do host para a porta 8000 do container
+    # A API ficará disponível em:
+    # http://localhost:8000
+    ports:
+      - "8000:8000"
+
+    # Reinicia automaticamente o container caso ele pare,
+    # exceto quando for interrompido manualmente
+    restart: unless-stopped
+
   # Serviço do Prometheus responsável por coletar e armazenar métricas
   prometheus:
 
@@ -24,3 +43,7 @@ services:
     # Reinicia automaticamente o container caso ele pare,
     # exceto quando for interrompido manualmente
     restart: unless-stopped
+
+    # Garante que a API suba antes do Prometheus tentar coletar dela
+    depends_on:
+      - api
